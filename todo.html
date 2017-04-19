@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ToDo</title>
+        <script type="text/javascript" src="js/vue1.js" ></script>
+        <link rel="stylesheet" href="css/semantic.css"  media="screen" title="no title" charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Oswald|Raleway" rel="stylesheet">
+        <style type="text/css">
+            body {
+            background-color: #FDFDFD;
+            }
+            .ui.very.padded.segment.container {
+            width: 500px;
+            position: relative;
+            transform: translate(0,-50%);
+            top:30%;
+            }
+            .remove.icon {
+            color: #EAEBEB;
+            }
+            .ui.very.padded.container {
+            width: 500px;
+            }
+        </style>
+    </head>
+    <body id="app">
+        <div class="ui very padded container">
+            <div class="ui text menu">
+                <div class="header item" style="font-size:20px;">
+                    <i class="checkmark box icon"></i>
+                    今日 To Do
+                </div>
+            </div>
+            <div class="ui divider"></div>
+        </div>
+
+        <div class="ui very padded segment container">
+            <div class="ui action fluid input">
+                <input v-model="newmessage" type="text" placeholder="添加新任务">
+                <button v-on:click="addnew(newmessage)" class="ui icon basic button">
+                    <i class="plus icon" style="color:#666666"></i>
+                </button>
+            </div>
+
+            <div v-for="message in messages"  class="ui relaxed divided list">
+                <div class="item" v-if="message.co">
+
+                    <div v-on:click="message.show=!message.show" class="left floated ">
+                        <input type="checkbox" >
+                    </div>
+
+                    <div class="right floated content">
+                        <a v-on:click="message.co=false">
+                            <i class="remove icon"></i>
+                        </a>
+                    </div>
+
+                    <p v-if="message.show"style="font-size:14px;">{{ message.names }}</p>
+                    <p v-else style="font-size:14px;"><s>{{ message.names }}</s></p>
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                messages:[
+                    {names:"分享学习笔记",show:true,co:true},
+                    {names:"修改BUG",show:true,co:true},
+                    {names:"NOTE记录",show:true,co:true},
+                    {names:"整理明日学习计划",show:true,co:true},
+
+                ]
+            },
+            methods:{
+                addnew:function(text){
+                    if (text=="") {
+                        alert("please input something");
+                    } else {
+                        this.messages.push({names:text,show:true,co:true});
+                    }
+                }
+            }
+
+
+        })
+
+        </script>
+
+    </body>
+</html>
